@@ -11,6 +11,7 @@ def load_credentials():
 
 
 def setup_twitter_api():
+    # setups api using credentials provided in config file
     consumer_key, consumer_secret, access_token, access_token_secret = load_credentials()
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
@@ -18,16 +19,8 @@ def setup_twitter_api():
     return api
 
 
-def main():
+def get_tweets_for_query(query, tweets_lang='en', cnt=15):
+    # returns list of tweets text for provided query
     api = setup_twitter_api()
-    search_results = api.search('Trump', lang='en')
-
-    # quick look up of results
-    for tweet in search_results:
-        print(tweet.text)
-        print('\n\n')
-
-    print('Total:', len(search_results))
-
-if __name__ == '__main__':
-    main()
+    search_results = api.search(query, lang=tweets_lang, count=cnt)
+    return [tweet.text for tweet in search_results]

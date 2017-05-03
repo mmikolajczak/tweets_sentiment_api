@@ -13,4 +13,5 @@ def get_sentiment_score(tweets):
             sentiment_pts += float(tb.sentiment.polarity)
             non_informational_cnt += 1
 
-    return sentiment_pts / non_informational_cnt
+    score = sentiment_pts / non_informational_cnt if non_informational_cnt != 0 else 0
+    return score, non_informational_cnt
